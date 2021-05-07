@@ -60,6 +60,11 @@ var vid_ronnie;
 var img_cocoaButter;
 
 var img_yamYam;
+var img_devilEmoji;
+var img_fistEmoji;
+var img_smashDoor;
+var img_bustHand;
+var img_pubTelly;
 
 // LOCATED ITEM VARIABLES
 var spareChange_found;
@@ -88,6 +93,21 @@ var saved_or_missed;
 var virus_action;
 
 // story2
+var img_pint_chosen;
+var img_half_chosen;
+var img_guinness_chosen;
+var img_whiteWine_chosen;
+var img_redWine_chosen;
+var img_cocktail_chosen;
+var img_whiskey_chosen;
+var img_lemonade_chosen;
+var img_coke_chosen;
+var img_mcCoys0_chosen;
+var img_mcCoys1_chosen;
+var img_mcCoys2_chosen;
+
+var drink_or_eat = false;
+
 var spareChange_action;
 var fiver_action;
 var mask0_action; // to deal with mask images
@@ -99,7 +119,7 @@ var parkingTicket_action;
 function preload()
 {
     // assets used before story splits 
-    img_redTarget = loadImage('assets/redTarget.png')
+    img_redTarget = loadImage('assets/redTarget.png');
     gif_loadDoor = loadImage('assets/door.gif');
     img_loadPopUp0 = loadImage('assets/popUp0.jpg');
     img_loadPopUp1 = loadImage('assets/popUp1.jpg');
@@ -109,9 +129,9 @@ function preload()
     img_loadPopUp5 = loadImage('assets/popUp5.jpg');
     img_loadPopUp6 = loadImage('assets/popUp6.jpg');
     img_loadPopUpX = loadImage('assets/popUpX.png');
-    img_banksHateHim = loadImage('assets/banksHateHim.jpg')
-    img_ronaldoFace = loadImage('assets/ronaldoFace.png')
-    img_halandFace = loadImage('assets/halandFace.png')
+    img_banksHateHim = loadImage('assets/banksHateHim.jpg');
+    img_ronaldoFace = loadImage('assets/ronaldoFace.png');
+    img_halandFace = loadImage('assets/halandFace.png');
     
     // assets used in story1_0
     img_football0 = loadImage('forTheGame_assets/football0.jpg');
@@ -165,11 +185,17 @@ function preload()
     img_airPod0 = loadImage('forAFew_assets/airPod0.png');
     img_airPod1 = loadImage('forAFew_assets/airPod1.png');
     img_chalk = loadImage('forAFew_assets/chalk0.png');
-    gif_ronnie = loadImage('forAFew_assets/ronnie.gif')
-    // vid_ronnie = createVideo(['assets/ronnie.mp4'], vidLoad);
+    gif_ronnie = loadImage('forAFew_assets/ronnie.gif');
     img_cocoaButter = loadImage('forAFew_assets/cocoaButter.png');
     
     img_yamYam = loadImage('forAFew_assets/yamYam.jpg');
+    img_devilEmoji = loadImage('forAFew_assets/devilEmoji.png');
+    img_fistEmoji = loadImage('forAFew_assets/fistEmoji.png');
+    
+    img_smashDoor = loadImage('forAFew_assets/smashDoor.jpg');
+    img_bustHand = loadImage('forAFew_assets/bustHand.jpg');
+    img_pubTelly = loadImage('forAFew_assets/pubTelly.png');
+    gif_onTelly = loadImage('forAFew_assets/onTelly.gif');
 }
 
 // SETUP SETUP SETUP SETUP
@@ -181,8 +207,8 @@ function setup()
     
     gameState = 0;
 
-    // initialise boolean before items have been found;
-    items_found();
+    items_found(); // call function so the items are not initially found
+    drink_chosen(); // all false until one is chosen
     
     // INITIALISE BOOLEAN TO DETERMINE WHETHER ACTION IS PERFORMED
     
@@ -206,23 +232,6 @@ function setup()
 
 // DRAW DRAW DRAW DRAW DRAW 
 // ------------------------
-
-function items_found()
-{
-    spareChange_found = false;
-    fiver_found = false;
-    mask0_found = false;
-    mask1_found = false;
-    lighter_found = false;
-    loyaltyCard_found = false;
-    santanderReceipt_found = false;
-    parkingTicket_found = false;
-    crackedPhone_found = false;
-    airPod0_found = false;
-    airPod1_found = false;
-    chalk_found = false;
-    cocoaButter_found = false;
-}
 
 function draw()
 {   
@@ -264,7 +273,7 @@ function draw()
     }
     if(gameState == 3)
     {
-        story2_0(); // call the function for the 2nd storyline
+        story2_0(); // choosing a drink
     }
     if(gameState == 5)
     {
@@ -276,8 +285,53 @@ function draw()
     }
     if(gameState == 9)
     {
-        story2_3(); // once payed for the drink 
+        story2_3(); // sitting down watching the telly
     }
+    if(gameState == 11)
+    {
+        story2_4(); // group of lads 
+    }
+    if(gameState == 13)
+    {
+        story2_5(); // into a scrap 
+    }
+    if(gameState == 15)
+    {
+        story2_6();
+    }
+}
+
+function items_found()
+{
+    spareChange_found = false;
+    fiver_found = false;
+    mask0_found = false;
+    mask1_found = false;
+    lighter_found = false;
+    loyaltyCard_found = false;
+    santanderReceipt_found = false;
+    parkingTicket_found = false;
+    crackedPhone_found = false;
+    airPod0_found = false;
+    airPod1_found = false;
+    chalk_found = false;
+    cocoaButter_found = false;
+}
+
+function drink_chosen()
+{
+    img_pint_chosen = false;
+    img_half_chosen = false;
+    img_guinness_chosen = false;
+    img_whiteWine_chosen = false;
+    img_redWine_chosen = false;
+    img_cocktail_chosen = false;
+    img_whiskey_chosen = false;
+    img_lemonade_chosen = false;
+    img_coke_chosen = false;
+    img_mcCoys0_chosen = false;
+    img_mcCoys1_chosen = false;
+    img_mcCoys2_chosen = false;
 }
 
 // FUNCTIONS TO INCREMENT THE GAME STATE
@@ -318,6 +372,7 @@ function forTheGame()
     fill(255);
     text(opt1, width/2.7, height/2);
 }
+
 function forAFew()
 {
     let opt2 = "here for a few";
@@ -364,6 +419,9 @@ function choice1()
     forAFew();
 }
 
+// STORY 1 FUNCTIONS
+// -----------------
+
 function story1_0()
 {
     image(img_football0, 0, 0, width, height); // background image
@@ -405,7 +463,7 @@ function story1_0()
         }      
     }
     
-    //marcus rashford one
+    //marcus rashford - make the run
     if(mouseX > width/8 && mouseX < width/8 + 600 && 
        mouseY > height/30 && mouseY < height/30 + 300)
     {
@@ -421,8 +479,7 @@ function story1_0()
         }
     }
     
-    
-    // just pitch
+    // just pitch gif
     if(mouseX > width/3 && mouseX < width/3 + 300 && 
        mouseY > height/1.85 && mouseY < height/1.85 + 300)
     {
@@ -478,7 +535,7 @@ function story1_3()
     push();
     fill(0, 0, 200);
     stroke(255);
-    rect(width/2 -50, height/2 -25, 100, 35, 5);
+    rect(width/2 -50, height/2 - 25, 100, 35, 5);
 
     textSize(20);
     fill(255);
@@ -507,6 +564,7 @@ function story1_4()
     rotate(PI/50);
     image(img_loadPopUp6, width - width/5 - 20, 20, width/5, height - 40);
     textSize(60);
+    textAlign(CENTER);
     text('GOAL SCORED', 0, height/3, width, height);
        
     push();
@@ -542,81 +600,143 @@ function story1_6()
     image(img_redTarget, mouseX - 35, mouseY - 35, 70, 70);
 }
 
+// STORY 2 FUNCTIONS
+// -----------------
+
 function story2_0()
 {
     background(255);
     
-    image(img_mcCoys0, width/1.8, height/10, 200, 200);
-    image(img_mcCoys1, width/1.8, height/10, 200, 200);
-    image(img_mcCoys2, width/1.8, height/10, 200, 200);
+    drink_chosen(); // reset so no drinks are still chosen
     
-    image(img_pint, width/20, height/7, 200, 200);
-    image(img_half, width/20, height/7, 200, 200);
-    
-    image(img_redWine, width/2, height/1.4, 200, 200);
-    image(img_whiteWine, width/2, height/1.4, 200, 200);
-    
-    image(img_guinness, width/5, height/5, 200, 200);
-    
-    image(img_cocktail, width/1.5, height/1.5, 600, 200); 
-    
-    image(img_whiskey, width/4, height/2, 200, 200);
-    
-    image(img_lemonade, width/1.2, height/5, 200, 200);
-    
-    image(img_coke, width/17, height/2, 200, 400);
-    
-    if(mouseX > width/1.8 && mouseX < width/1.8 + 200 && 
-       mouseY > height/10 && mouseY < height/10 + 200)
-    {
-        return true;
-    }
-    
-    if(mouseX > width/20 && mouseX < width/20 + 200 && 
-       mouseY > height/7 && mouseY < height/7 + 200)
-    {
-        return true;
-    }
-    
-    if(mouseX > width/2 && mouseX < width/2 + 200 && 
-       mouseY > height/1.4 && mouseY < height/1.4 + 200)
-    {
-        return true;
-    }
-    
-    if(mouseX > width/5 && mouseX < width/5 + 200 && 
-       mouseY > height/5 && mouseY < height/5 + 200)
-    {
-        return true;
-    }
-     
-    if(mouseX > width/1.5 && mouseX < width/1.5 + 600 && 
-       mouseY > height/1.5 && mouseY < height/1.5 + 200)
-    {
-        return true;
-    }
-    
-    if(mouseX > width/4 && mouseX < width/4 + 200 && 
-       mouseY > height/2 && mouseY < height/2 + 200)
-    {
-        return true;
-    }
-    
-    if(mouseX > width/1.2 && mouseX < width/1.2 + 200 && 
-       mouseY > height/5 && mouseY < height/5 + 200)
-    {   
-        return true;
-    }
-    
-
-    if(mouseX > width/17 && mouseX < width/17 + 200 && 
-       mouseY > height/2 && mouseY < height/2 + 400)
+    // choice of mccoys
+    if(mouseX > width/1.6 && mouseX < width/1.6 + 150 && 
+       mouseY > height/3 && mouseY < height/3 + 800)
     {    
-        return true;
+        image(img_mcCoys0, width/1.6, height/3, 150, 150);
+        image(img_mcCoys1, width/1.6, height/1.9, 150, 150);
+        image(img_mcCoys2, width/1.6, height/1.3, 150, 150);
     }
     else
     {
-        return false;
+        image(img_mcCoys0, width/1.6, height/1.4, 150, 200);
+    }
+    
+    // choice of beeer
+    if(mouseX > width/7 && mouseX < width/7 + 200 && 
+       mouseY > height/1.7 && mouseY < height/1.7 + 400)
+    {    
+        image(img_pint, width/7, height/1.4, 200, 200);
+        image(img_half, width/6.8, height/1.7, 100, 100);
+    }
+    else
+    {    
+        image(img_pint, width/7, height/1.6, 200, 300);
+    }
+    
+    // choice of wine
+    if(mouseX > width/2 && mouseX < width/2 + 150 && 
+       mouseY > height/2.6 && mouseY < height/2.6 + 750)
+    {    
+        image(img_redWine, width/2, height/2.6, 200, 150);
+        image(img_whiteWine, width/2, height/1.6, 200, 150);
+    }
+    else
+    {
+        image(img_whiteWine, width/2, height/1.8, 200, 350);
+    }
+    
+    // other drinks that don't have a choice
+    image(img_guinness, width/3.5, height/1.4, 150, 200); 
+    image(img_whiskey, width/2.5, height/1.4, 200, 200);
+    image(img_lemonade, width/1.35, height/1.6, 200, 250);
+    image(img_cocktail, width/1.16, height/1.4, 200, 200);
+    image(img_coke, 0, height/2, 200, 400);
+}
+    
+function drink_chosen_clicked()
+{    
+    // cocacola
+    if(mouseX > 0 && mouseX < 0 + 200 && 
+       mouseY > height/2 && mouseY < height/2 + 400)
+    {
+        img_coke_chosen = true;
+    }
+    
+    //beer
+    if(mouseX > width/7 && mouseX < width/7 + 200 && 
+       mouseY > height/1.7 && mouseY < height/1.7 + 400)
+    {
+        if(mouseY > height/1.7 + 100)
+        {
+            img_pint_chosen = true;
+        }
+        else
+        {
+            img_half_chosen = true;
+        }
+    }
+    
+    // guinness
+    if(mouseX > width/3.5 && mouseX < width/3.5 + 150 && 
+       mouseY > height/1.4 && mouseY < height/1.4 + 200)
+    {
+        img_guinness_chosen = true;
+    }
+    
+    // whiskey
+    if(mouseX > width/2.5 && mouseX < width/2.5 + 150 && 
+       mouseY > height/1.4 && mouseY < height/1.4 + 200)
+    {
+        img_whiskey_chosen = true;
+    }
+     
+    // wine
+    if(mouseX > width/2 && mouseX < width/2 + 150 && 
+       mouseY > height/2.6 && mouseY < height/2.6 + 750)
+    {
+        if(mouseY > width/2 + 150)
+        {
+            img_whiteWine_chosen = true;
+        }
+        else
+        {
+            img_redWine_chosen = true;
+        }
+    }
+    
+    // mccoys
+    if(mouseX > width/1.6 && mouseX < width/1.6 + 150 && 
+       mouseY > height/3 && mouseY < height/3 + 800)
+    {
+        if(mouseY > height/3 + 300)
+        {
+            img_mcCoys2_chosen = true; // sweet chicken
+        }
+        else if(mouseY > height/3 + 150)
+        {
+            img_mcCoys1_chosen = true; // salt vinegar
+        }
+        else
+        {
+            img_mcCoys0_chosen = true; //cheddar onion
+        }
+        
+        drink_or_eat = true;
+    }
+    
+    // lemonade
+    if(mouseX > width/1.35 && mouseX < width/1.35 + 200 && 
+       mouseY > height/1.6 && mouseY < height/1.6 + 250)
+    {
+        img_lemonade_chosen = true;
+    }
+    
+    // cocktail width/1.2, height/1.4, 200, 200
+    if(mouseX > width/1.16 && mouseX < width/1.16 + 200 && 
+       mouseY > height/1.4 && mouseY < height/1.4 + 200)
+    {    
+        img_cocktail_chosen = true;
     }
 }
 
@@ -644,15 +764,16 @@ function story2_1()
     noStroke();
     text('its cash only mate', width/2, height/3)
       
-    pop();
+    push();
     fill(0, 0, 200);
     stroke(255);
+    textAlign(CENTER);
     rect(width/2 -50, height/2 -25, 100, 35, 5);
     textSize(20);
     fill(255);
     textFont('Georgia');
     text('okay', width/2, height/2);
-    push();
+    pop();
 }
 
 function story2_2()
@@ -676,11 +797,12 @@ function story2_2()
         fill(200, 0, 0);
         noStroke();
         textAlign(CENTER);
+        textFont('Georgia');
         text('here you go mate', width/1.6 + 200, height/2 + 100);
     }
     
     //draw the five pound note
-     if(mouseX > width/2.2 && mouseX < width/2.2 + 420 && 
+    if(mouseX > width/2.2 && mouseX < width/2.2 + 420 && 
        mouseY > height/20 && mouseY < height/20 + 230)
     {    
         fiver_found = true;
@@ -695,9 +817,9 @@ function story2_2()
         fill(200, 0, 0);
         noStroke();
         textAlign(CENTER);
+        textFont('Georgia');
         text('keep the change', width/2.2 + 210, height/20 + 115);
     }
-    
     
     // to make the mask images appear and change whe you click on them 
     if(mouseX > width/50 && mouseX < width/50 + 400 && 
@@ -713,7 +835,6 @@ function story2_2()
     {
         image(img_mask1, width/50, height/5, 400, 220);
     }
-    
     
     // to draw the flame and the lighter
     if(mouseX > width/2 && mouseX < width/2 + 120 && 
@@ -731,7 +852,7 @@ function story2_2()
         image(img_lighter, width/2, height/1.7, 120, 240);
     }
     
-    
+    //loyalty card
     if(mouseX > width/1.3 && mouseX < width/1.3 + 260 && 
        mouseY > height/1.3 && mouseY < height/1.3 + 180)
     {    
@@ -741,7 +862,6 @@ function story2_2()
     {    
        image(img_loyaltyCard, width/1.3, height/1.3, 260, 180);
     }
-    
     
     if(mouseX > width/1.3 && mouseX < width/1.3 + 200 && 
        mouseY > height/30 && mouseY < height/30 + 340)
@@ -753,7 +873,6 @@ function story2_2()
        image(img_santanderReceipt, width/1.3, height/30, 200, 340);
     }
     
-    
     if(mouseX > 0 && mouseX < 0 + 360 && 
        mouseY > height/2 && mouseY < height/2 + 300)
     {    
@@ -764,7 +883,6 @@ function story2_2()
        image(img_crackedPhone, -20, height/2, 460, 400);
     }
         
-    
     if(mouseX > 0 && mouseX < 0 + 150 && 
        mouseY > 0 && mouseY < 0 + 150)
     {    
@@ -785,7 +903,6 @@ function story2_2()
        image(img_airPod1, width/1.7, height/3, 150, 150);
     }
     
-    
     if(mouseX > width/3.5 && mouseX < width/3.5 + 250 && 
        mouseY > 0 && mouseY < 0 + 250)
     {    
@@ -795,7 +912,6 @@ function story2_2()
     {    
        image(img_cocoaButter, width/3.5, 0, 250, 250);
     }
-    
     
     // to draw chalk and to play gif from action
     if(mouseX > width/3.5 && mouseX < width/3.5 + 150 && 
@@ -812,7 +928,6 @@ function story2_2()
         image(gif_ronnie, 0, 0, width, height);
         isRonnie = true;
     }
-    
     
     // switch from the parking ticket and the pop up ad
     if(mouseX > width/3 && mouseX < width/3 + 150 && 
@@ -835,7 +950,110 @@ function story2_2()
 
 function story2_3()
 {
-    image(img_yamYam, 0, 0, width, height);
+    image(gif_onTelly, width/1.88, height/4.45, 310, 150);
+    image(img_pubTelly, 0, 0, width, height);
+
+    // so that the right drink is on the table that the player ordered at the bar 
+    if(img_pint_chosen == false)
+    {
+        image(img_pint, width/10, height/1.8, 150, 200);
+    }
+    if(img_half_chosen == true)
+    {
+        image(img_half, width/10, height/1.8, 150, 200);
+    }
+    if(img_guinness_chosen == true)
+    {
+        image(img_guinness, width/10, height/1.8, 150, 200);
+    }
+    if(img_whiteWine_chosen == true)
+    {
+        image(img_whiteWine, width/10, height/1.8, 150, 200);
+    }
+    if(img_redWine_chosen == true)
+    {
+        image(img_redWine, width/10, height/1.8, 150, 200);
+    }
+    if(img_cocktail_chosen == true)
+    {
+        image(img_cocktail, width/10, height/1.8, 150, 200);
+    }
+    if(img_whiskey_chosen == true)
+    {
+        image(img_whiskey, width/10, height/1.8, 150, 200);
+    }
+    if(img_lemonade_chosen == true)
+    {
+        image(img_lemonade, width/10, height/1.8, 150, 200);
+    }
+    if(img_coke_chosen == true)
+    {
+        image(img_coke, width/10, height/1.8, 150, 200);
+    }
+    if(img_mcCoys0_chosen == true)
+    {
+        image(img_mcCoys0, width/10, height/1.8, 150, 200);
+    }
+    if(img_mcCoys1_chosen == true)
+    {
+        image(img_mcCoys1, width/10, height/1.8, 150, 200);
+    }
+    if(img_mcCoys2_chosen == true)
+    {
+        image(img_mcCoys2, width/10, height/1.8, 150, 200);
+    }
+    
+    push();
+    fill(0, 0, 200);
+    stroke(255);
+    textAlign(CENTER);
+    rect(width/1.57 - 50, height/1.13 - 25, 100, 35, 5);
+    textSize(20);
+    fill(255);
+    textFont('Georgia');
+    text('shout', width/1.57, height/1.13);
+    pop();
+    
+    push();
+    fill(0, 0, 200);
+    stroke(255);
+    textAlign(CENTER);
+    rect(width/6.6 - 50, height/1.13 - 25, 100, 35, 5);
+    textSize(20);
+    fill(255);
+    textFont('Georgia');
+    if(drink_or_eat == false)//if crisps were chosen
+    {    
+        text('drink', width/6.6, height/1.13);
+    }
+    else
+    {
+        text('eat', width/6.6, height/1.13);
+    }
+    pop();
+}
+
+function story2_4()
+{
+    image(img_yamYam, 0, 0, width, height*1.21);
+    
+    image(img_devilEmoji, width/4.5, height/3.2, 100, 100);
+    image(img_fistEmoji, mouseX - 40, mouseY - 40, 80, 80);
+}
+
+function story2_5()
+{
+    image(img_smashDoor, 0, 0, width, height);
+}
+
+function story2_6()
+{
+    image(img_bustHand, width/2, 40, width/2 - 40, height - 80);
+    
+    textSize(25);
+    fill(200, 0, 0);
+    textFont('Georgia');
+    text('call it a night', width/2.05, height/5);
 }
     
 function optButtons_clicked()
@@ -863,6 +1081,31 @@ function optButtons_clicked()
         }
     }
     
+    // options to drink or to shout at the telly
+    if(gameState == 9)
+    {
+        if(mouseX > width/1.57 - 50 && mouseX < width/1.57 + 50 && 
+           mouseY > height/1.13 - 25 && mouseY < height/1.13 + 25)
+        {
+            increaseGameStateTwice();
+        }
+        if(mouseX > width/6.6 - 50 && mouseX < width/6.6 + 50 && 
+           mouseY > height/1.13 - 25 && mouseY < height/1.13 + 25)
+        {
+            gameState = 3;
+        }
+    }
+    
+    //use the fist emoji to punch the angry devil emoji
+    if(gameState == 11)
+    {
+        if(mouseX > width/4.5 && mouseX < width/4.5 + 100 && 
+           mouseY > height/3.2 && mouseY < height/3.2 + 100)
+        {
+            increaseGameStateTwice();
+        }
+    }
+    
     if(gameState == 8 || gameState == 10)
     {
         if(mouseX > width/2 - 200 && mouseX < width/2 + 200 && 
@@ -878,6 +1121,14 @@ function optButtons_clicked()
            mouseY > height/4.5 - 25 && mouseY < height/4.5 + 25)
         {
             virus_action = true;
+        }
+    }
+    
+    if(gameState == 15)
+    {
+        if(mouseX > width/2)
+        {
+            gameState = 0;
         }
     }
 }
@@ -957,7 +1208,7 @@ function story2_objects_clicked()
         }
         else
         {
-            increaseGameStateTwice(); // go to the next stage once payed
+            increaseGameStateTwice();
         }
     }
     
@@ -971,7 +1222,7 @@ function story2_objects_clicked()
         }
         else
         {
-            increaseGameStateTwice(); // go to the next stage once payed
+            increaseGameStateTwice();
         }
     }
     
@@ -1013,7 +1264,8 @@ function story2_objects_clicked()
             parkingTicket_action = true;
         }
     }
-    if(mouseX > 1065 && mouseX < 1110 && mouseY > 155 && mouseY < 205)
+    if(mouseX > 1065 && mouseX < 1110 && 
+       mouseY > 155 && mouseY < 205)
     {
         parkingTicket_action = false;
     }
@@ -1036,6 +1288,7 @@ function story2_objects_clicked()
         console.log(chalk_action);
     }
 }
+
 // MOUSE OR KEY PRESSED FUNCTIONS
 // ------------------------------
 
@@ -1081,8 +1334,9 @@ function mousePressed()
             gameState -= 6; // shot missed
         }
     }
-    else if(gameState == 3 && story2_0() == true)
+    else if(gameState == 3)
     {
+        drink_chosen_clicked();
         increaseGameStateTwice();
     }
     else if(gameState == 5)
@@ -1095,7 +1349,20 @@ function mousePressed()
     }   
     else if(gameState == 9)
     {
-        gameState = 0;
         items_found();
+        optButtons_clicked();
+        drink_or_eat = false; //so that when you go back it resets
+    }
+    else if(gameState == 11)
+    {
+        optButtons_clicked();
+    }
+    else if(gameState == 13)
+    {
+        increaseGameStateTwice();
+    }
+    else if(gameState == 15)
+    {
+        optButtons_clicked();
     }
 }
